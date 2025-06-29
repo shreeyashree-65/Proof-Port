@@ -1,20 +1,14 @@
-import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 function Dashboard() {
   return (
-    <div className="p-4">
+    <div className="text-center mt-10">
       <Helmet>
-        <title>Dashboard | ProofPort</title>
-        <meta
-          name="description"
-          content="Manage your supplier proofs and certifications in the ProofPort dashboard."
-        />
+        <title>Dashboard | Proof-Port</title>
+        <meta name="description" content="Manage and verify supplier proofs on Proof-Port." />
       </Helmet>
-      <h1 className="text-3xl font-bold">Dashboard</h1>
-      <p className="mt-2">
-        Here you can manage your supplier proofs, certifications, and approvals.
-      </p>
+      <h1 className="text-3xl font-bold text-blue-600">Dashboard</h1>
+      <p className="mt-4 text-gray-700">This is where you’ll manage suppliers and proofs.</p>
     </div>
   );
 }

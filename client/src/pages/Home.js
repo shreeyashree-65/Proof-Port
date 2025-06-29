@@ -1,18 +1,19 @@
-import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 function Home() {
   return (
-    <div className="p-4">
+    <div className="text-center mt-10">
       <Helmet>
-        <title>Home | ProofPort</title>
-        <meta
-          name="description"
-          content="Welcome to ProofPort — your trusted decentralized supplier verification portal."
-        />
+        <title>Home | Proof-Port</title>
+        <meta name="description" content="Proof-Port: Verify supplier proofs securely on blockchain." />
       </Helmet>
-      <h1 className="text-3xl font-bold">Welcome to ProofPort</h1>
-      <p className="mt-2">Your trusted supplier verification solution.</p>
+      <h1 className="text-4xl font-bold text-blue-600">Welcome to Proof-Port</h1>
+      <p className="mt-4 text-lg text-gray-700">
+        A decentralized solution for supplier verification and authenticity.
+      </p>
+      <button className="mt-6 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+        Get Started
+      </button>
     </div>
   );
 }
