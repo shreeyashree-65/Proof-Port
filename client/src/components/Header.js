@@ -8,6 +8,7 @@ function Header() {
         <Link to="/" className="hover:underline">Home</Link>
         <Link to="/about" className="hover:underline">About</Link>
         <Link to="/dashboard" className="hover:underline">Dashboard</Link>
+        <Link to="/register" className="hover:underline">Register Supplier</Link>
       </nav>
     </header>
   );
