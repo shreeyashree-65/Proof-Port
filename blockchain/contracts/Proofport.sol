@@ -13,6 +13,7 @@ contract ProofPort {
 
     mapping(address => Supplier) public suppliers;
     mapping(address => bool) public approvedCertifiers;
+    address[] public supplierAddresses;
 
     address public owner;
 
@@ -60,6 +61,8 @@ contract ProofPort {
             isApproved: false,
             exists: true
         });
+
+        supplierAddresses.push(msg.sender);
 
         emit SupplierRegistered(msg.sender, _name, _idNumber, _proofHash);
     }
@@ -110,4 +113,13 @@ contract ProofPort {
             s.isApproved
         );
     }
+
+    function getAllSuppliers() external view returns (Supplier[] memory) {
+        Supplier[] memory list = new Supplier[](supplierAddresses.length);
+        for (uint i = 0; i < supplierAddresses.length; i++) {
+            list[i] = suppliers[supplierAddresses[i]];
+        }
+        return list;
+}
+
 }
