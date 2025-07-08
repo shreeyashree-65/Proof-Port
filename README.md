@@ -56,27 +56,24 @@ git clone https://github.com/your-username/proof-port.git
 cd proof-port
 
 1. Install frontend dependencies
-```bash
 cd client
 npm install
 
-2. Set up .env in ```bash /blockchain
-```bash
+2. Set up .env in /blockchain
 SEPOLIA_URL=https://eth-sepolia.g.alchemy.com/v2/YOUR_KEY
 PRIVATE_KEY=YOUR_WALLET_PRIVATE_KEY
 ETHERSCAN_API_KEY=YOUR_ETHERSCAN_KEY
 
 3. Compile & Deploy Smart Contract
-```bash
 cd blockchain
 npx hardhat compile
 npx hardhat run scripts/deploy.js --network sepolia
 
 4. Run Frontend
-```bash
 cd client
 npm start
 
 Visit: http://localhost:3000
+
 
 ##📸 Screenshots
