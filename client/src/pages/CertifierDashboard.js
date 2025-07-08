@@ -1,101 +1,121 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getContract } from "../utils/contract";
 import { toast } from "react-toastify";
 
 const CertifierDashboard = () => {
-  const [supplierAddress, setSupplierAddress] = useState("");
-  const [supplierData, setSupplierData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [suppliers, setSuppliers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleFetchSupplier = async () => {
-    try {
-      const { contract } = getContract();
-      setLoading(true);
-      const data = await contract.getSupplier(supplierAddress);
-      setSupplierData({
-        name: data[0],
-        idNumber: data[1],
-        proofHash: data[2],
-        certifier: data[3],
-        isApproved: data[4],
-      });
-    } catch (err) {
-      toast.error("Supplier not found.");
-      setSupplierData(null);
-    } finally {
-      setLoading(false);
-    }
-  };
+const fetchAllSuppliers = async () => {
+  try {
+    const { contract } = await getContract();
+    const allEvents = await contract.queryFilter("SupplierRegistered");
 
-  const handleApprove = async () => {
+    const supplierAddresses = allEvents.map((event) => event.args[0]);
+    const uniqueAddresses = [...new Set(supplierAddresses)];
+
+    const supplierData = await Promise.all(
+      uniqueAddresses.map(async (address) => {
+        const s = await contract.getSupplier(address);
+        return {
+          address,
+          name: s[0],
+          idNumber: s[1],
+          proofHash: s[2],
+          certifier: s[3],
+          isApproved: s[4],
+        };
+      })
+    );
+
+    setSuppliers(supplierData);
+  } catch (err) {
+    console.error("Error fetching suppliers", err);
+    toast.error("Failed to load suppliers");
+  } finally {
+    setLoading(false);
+  }
+};
+
+  const handleApprove = async (supplierAddress) => {
     try {
-      const { contract } = getContract();
+      const { contract } = await getContract();
       const tx = await contract.approveProof(supplierAddress);
       await tx.wait();
-      toast.success("Proof approved.");
-      handleFetchSupplier();
+      toast.success("Proof approved!");
+      fetchAllSuppliers();
     } catch (err) {
+      console.error(err);
       toast.error("Approval failed.");
     }
   };
 
-  const handleRevoke = async () => {
+  const handleRevoke = async (supplierAddress) => {
     try {
-      const { contract } = getContract();
+      const { contract } = await getContract();
       const tx = await contract.revokeProof(supplierAddress);
       await tx.wait();
       toast.success("Proof revoked.");
-      handleFetchSupplier();
+      fetchAllSuppliers();
     } catch (err) {
+      console.error(err);
       toast.error("Revocation failed.");
     }
   };
 
+  useEffect(() => {
+    fetchAllSuppliers();
+  }, []);
+
+  if (loading) return <p className="text-center">Loading suppliers...</p>;
+
   return (
-    <div className="max-w-xl mx-auto bg-white p-6 shadow rounded">
-      <h2 className="text-2xl font-semibold mb-4">Certifier Dashboard</h2>
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow mt-6">
+      <h2 className="text-2xl font-bold mb-4">Certifier Dashboard</h2>
 
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Supplier address"
-          value={supplierAddress}
-          onChange={(e) => setSupplierAddress(e.target.value)}
-          className="border p-2 w-full rounded"
-        />
-        <button
-          onClick={handleFetchSupplier}
-          className="bg-blue-600 text-white mt-2 px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Fetch Supplier
-        </button>
-      </div>
-
-      {loading && <p>Loading...</p>}
-
-      {supplierData && (
-        <div className="border-t pt-4">
-          <p><strong>Name:</strong> {supplierData.name}</p>
-          <p><strong>ID Number:</strong> {supplierData.idNumber}</p>
-          <p><strong>Proof Hash:</strong> {supplierData.proofHash}</p>
-          <p><strong>Approved:</strong> {supplierData.isApproved ? "✅ Yes" : "❌ No"}</p>
-          <p><strong>Certifier:</strong> {supplierData.certifier}</p>
-
-          <div className="mt-4 flex gap-4">
-            <button
-              onClick={handleApprove}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-            >
-              Approve
-            </button>
-            <button
-              onClick={handleRevoke}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              Revoke
-            </button>
-          </div>
-        </div>
+      {suppliers.length === 0 ? (
+        <p>No suppliers found.</p>
+      ) : (
+        <table className="w-full text-left border">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-2 border">Address</th>
+              <th className="p-2 border">Name</th>
+              <th className="p-2 border">ID</th>
+              <th className="p-2 border">Proof Hash</th>
+              <th className="p-2 border">Status</th>
+              <th className="p-2 border">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {suppliers.map((s, i) => (
+              <tr key={i} className="border-t">
+                <td className="p-2 border">{s.address}</td>
+                <td className="p-2 border">{s.name}</td>
+                <td className="p-2 border">{s.idNumber}</td>
+                <td className="p-2 border">{s.proofHash}</td>
+                <td className="p-2 border">{s.isApproved ? "✅ Approved" : "❌ Not Approved"}</td>
+                <td className="p-2 border space-x-2">
+                  {!s.isApproved ? (
+                    <button
+                      className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                      onClick={() => handleApprove(s.address)}
+                    >
+                      Approve
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                      onClick={() => handleRevoke(s.address)}
+                    >
+                      Revoke
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );
