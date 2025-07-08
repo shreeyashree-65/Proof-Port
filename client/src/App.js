@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import RegisterSupplier from "./pages/RegisterSupplier";
+import SupplierDashboard from "./pages/SupplierDashboard";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/register" element={<RegisterSupplier />} />
+            <Route path="/supplier" element={<SupplierDashboard />} />
           </Routes>
         </main>
         <Footer />
