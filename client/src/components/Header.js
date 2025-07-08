@@ -10,6 +10,7 @@ function Header() {
         <Link to="/dashboard" className="hover:underline">Dashboard</Link>
         <Link to="/register" className="hover:underline">Register Supplier</Link>
         <Link to="/supplier" className="hover:underline">Supplier</Link>
+        <Link to="/certifier" className="hover:underline">Certifier</Link>
       </nav>
     </header>
   );
