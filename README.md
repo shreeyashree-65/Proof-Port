@@ -72,7 +72,7 @@ npx hardhat run scripts/deploy.js --network sepolia
 4. Run Frontend
 cd client
 npm start
-
+```
 Visit: http://localhost:3000
 
 
