@@ -9,7 +9,7 @@ import SupplierDashboard from "./pages/SupplierDashboard";
 import CertifierDashboard from "./pages/CertifierDashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import OwnerDashboard from './pages/OwnerDashboard';
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
             <Route path="/register" element={<RegisterSupplier />} />
             <Route path="/supplier" element={<SupplierDashboard />} />
             <Route path="/certifier" element={<CertifierDashboard />} />
+            <Route path="/owner" element={<OwnerDashboard />} />
           </Routes>
         </main>
         <Footer />
