@@ -76,4 +76,15 @@ npm start
 Visit: http://localhost:3000
 
 
-##📸 Screenshots
+## 📸 Screenshots
+
+## Future Scope
+
+IPFS/NFT-based certificate integration
+Verifiable Credentials (VC) support
+
+## Author
+Shreeya P S
+
+## 📄 License
+This project is licensed under the MIT License.
