@@ -80,8 +80,8 @@ Visit: http://localhost:3000
 
 ## Future Scope
 
-IPFS/NFT-based certificate integration
-Verifiable Credentials (VC) support
+- IPFS/NFT-based certificate integration
+- Verifiable Credentials (VC) support
 
 ## Author
 Shreeya P S
