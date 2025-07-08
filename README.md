@@ -40,7 +40,7 @@ Proof-Port is a decentralized platform that allows **suppliers** to register the
 
 ---
 
-## 🖥 Running Locally
+##  Running Locally
 
 ### 🔧 Prerequisites
 
@@ -86,5 +86,5 @@ Visit: http://localhost:3000
 ## Author
 Shreeya P S
 
-## 📄 License
+## License
 This project is licensed under the MIT License.
