@@ -9,6 +9,7 @@ function Header() {
         <Link to="/about" className="hover:underline">About</Link>
         <Link to="/dashboard" className="hover:underline">Dashboard</Link>
         <Link to="/register" className="hover:underline">Register Supplier</Link>
+        <Link to="/supplier" className="hover:underline">Supplier</Link>
       </nav>
     </header>
   );
