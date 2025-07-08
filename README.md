@@ -4,16 +4,16 @@ Proof-Port is a decentralized platform that allows **suppliers** to register the
 
 ---
 
-## 🚀 Features
+##  Features
 
-- ✅ **Supplier Registration** with identity and proof hash (e.g., IPFS/NFT hash)
+-  **Supplier Registration** with identity and proof hash (e.g., IPFS/NFT hash)
 - 🧾 **Certifier Approval System** — only verified certifiers can approve or revoke proofs
-- 🔄 **Update Proof** — suppliers can update their uploaded certificate hashes
-- 🔍 **View Supplier Data** (name, ID, proof, certifier, approval status)
-- 👨‍⚖️ **Owner-only Certifier Management**
-- 🔐 **MetaMask Integration** for secure login and transactions
-- 🌐 **Deployed on Sepolia Testnet**
-- 💅 Built with **React**, **Tailwind CSS**, **Hardhat**, and **Ethers.js**
+-  **Update Proof** — suppliers can update their uploaded certificate hashes
+-  **View Supplier Data** (name, ID, proof, certifier, approval status)
+-  **Owner-only Certifier Management**
+-  **MetaMask Integration** for secure login and transactions
+-  **Deployed on Sepolia Testnet**
+-  Built with **React**, **Tailwind CSS**, **Hardhat**, and **Ethers.js**
 
 ---
 
@@ -28,7 +28,7 @@ Proof-Port is a decentralized platform that allows **suppliers** to register the
 
 ---
 
-## 🧠 Smart Contract Overview
+##  Smart Contract Overview
 
 - **Contract Name**: `ProofPort.sol`
 - **Language**: Solidity (v0.8.20)
@@ -40,7 +40,7 @@ Proof-Port is a decentralized platform that allows **suppliers** to register the
 
 ---
 
-## 🖥️ Running Locally
+## 🖥 Running Locally
 
 ### 🔧 Prerequisites
 
