@@ -1,47 +1,56 @@
-# Proof-Port: A Portal of Verified Supplier Proofs
+# 🛡️ Proof-Port: Decentralized Supplier Proof Verification System
 
-## 🌍 Project Overview
-
-**Proof-Port** is a decentralized platform designed to verify supplier authenticity through blockchain technology. Suppliers upload proofs (e.g. certificates, compliance documents) that approved certifiers can verify. The goal is to prevent fraud, fake suppliers, and unverified vendors in global supply chains.
-
-## ⚡ Why Proof-Port?
-
-In real-world scenarios:
-- 🌐 Large organizations lose millions due to **fake suppliers** or **fraudulent certifications**.
-- Example: In 2021, several governments and corporations faced procurement scandals where fake vendors supplied counterfeit or substandard materials, causing both financial and reputational damage.
-- Existing solutions are often centralized, expensive, and vulnerable to tampering.
-
-**Proof-Port solves this** by offering:
-✅ Transparent, tamper-proof proof records  
-✅ Decentralized certifier system  
-✅ Supplier-managed updates with traceability  
+Proof-Port is a decentralized platform that allows **suppliers** to register their credentials, upload verifiable proofs (e.g., certifications), and get them **approved by trusted certifiers** — all on the **blockchain**. It ensures **transparency**, **trust**, and **immutability** in supply chain verification.
 
 ---
 
-## 🔑 Contract Details
+## 🚀 Features
 
-- **Network:** Sepolia (Ethereum testnet)
-- **Contract address:** `YOUR_CONTRACT_ADDRESS_HERE`
-- **Etherscan link:** [View Contract on Etherscan](https://sepolia.etherscan.io/address/YOUR_CONTRACT_ADDRESS_HERE)
-
----
-
-## 🛠 Technologies
-
-- **Solidity**
-- **Hardhat**
-- **ethers.js**
-- **Alchemy (RPC + Etherscan API for verification)**
+- ✅ **Supplier Registration** with identity and proof hash (e.g., IPFS/NFT hash)
+- 🧾 **Certifier Approval System** — only verified certifiers can approve or revoke proofs
+- 🔄 **Update Proof** — suppliers can update their uploaded certificate hashes
+- 🔍 **View Supplier Data** (name, ID, proof, certifier, approval status)
+- 👨‍⚖️ **Owner-only Certifier Management**
+- 🔐 **MetaMask Integration** for secure login and transactions
+- 🌐 **Deployed on Sepolia Testnet**
+- 💅 Built with **React**, **Tailwind CSS**, **Hardhat**, and **Ethers.js**
 
 ---
 
-## 🚀 How it works
+## 📂 Tech Stack
 
-1️⃣ **Suppliers** register and upload a hash of their proof (e.g. IPFS CID or NFT metadata)  
-2️⃣ **Certifiers** (approved by contract owner) review and approve/revoke proofs  
-3️⃣ **Buyers / stakeholders** can verify a supplier’s status transparently on-chain  
+| Layer       | Tools Used                         |
+|-------------|------------------------------------|
+| Smart Contract | Solidity, Hardhat, OpenZeppelin    |
+| Frontend    | React.js, Tailwind CSS, React Router |
+| Web3        | Ethers.js, MetaMask                 |
+| Network     | Sepolia Testnet via Alchemy        |
 
 ---
 
-## 📂 Project Structure
+## 🧠 Smart Contract Overview
 
+- **Contract Name**: `ProofPort.sol`
+- **Language**: Solidity (v0.8.20)
+- **Role-Based Access**:
+  - `owner`: can add/remove certifiers
+  - `certifier`: can approve or revoke supplier proofs
+  - `supplier`: can register and update their proof hash
+- Events for each major action ensure transparency on-chain.
+
+---
+
+## 🖥️ Running Locally
+
+### 🔧 Prerequisites
+
+- Node.js (v16+)
+- MetaMask extension
+- Alchemy API Key
+- Sepolia testnet ETH
+
+### 🛠️ Setup
+
+```bash
+git clone https://github.com/your-username/proof-port.git
+cd proof-port
