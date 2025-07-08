@@ -7,7 +7,7 @@ Proof-Port is a decentralized platform that allows **suppliers** to register the
 ##  Features
 
 -  **Supplier Registration** with identity and proof hash (e.g., IPFS/NFT hash)
-- 🧾 **Certifier Approval System** — only verified certifiers can approve or revoke proofs
+-  **Certifier Approval System** — only verified certifiers can approve or revoke proofs
 -  **Update Proof** — suppliers can update their uploaded certificate hashes
 -  **View Supplier Data** (name, ID, proof, certifier, approval status)
 -  **Owner-only Certifier Management**
