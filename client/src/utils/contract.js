@@ -7,6 +7,8 @@ export async function getContract() {
     throw new Error("MetaMask not installed");
   }
 
+  await window.ethereum.request({ method: "eth_requestAccounts" });
+
   const CONTRACT_ADDRESS = process.env.REACT_APP_CONTRACT_ADDRESS;
   const provider = new ethers.BrowserProvider(window.ethereum);
   const signer = await provider.getSigner();

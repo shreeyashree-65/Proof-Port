@@ -7,6 +7,9 @@ import Footer from './components/Footer';
 import RegisterSupplier from "./pages/RegisterSupplier";
 import SupplierDashboard from "./pages/SupplierDashboard";
 import CertifierDashboard from "./pages/CertifierDashboard";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App() {
   return (
@@ -25,6 +28,7 @@ function App() {
         </main>
         <Footer />
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </Router>
   );
 }

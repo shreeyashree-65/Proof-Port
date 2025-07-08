@@ -2,86 +2,104 @@ import React, { useEffect, useState } from "react";
 import { getContract } from "../utils/contract";
 import { toast } from "react-toastify";
 
-const SupplierDashboard = () => {
-  const [supplier, setSupplier] = useState(null);
+const CertifierDashboard = () => {
+  const [suppliers, setSuppliers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [newHash, setNewHash] = useState("");
 
-  const fetchSupplierData = async () => {
+  const fetchSuppliers = async () => {
     try {
-      const { contract } = getContract();
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-      const data = await contract.getSupplier(accounts[0]);
-      setSupplier({
-        name: data[0],
-        idNumber: data[1],
-        proofHash: data[2],
-        certifier: data[3],
-        isApproved: data[4],
-      });
+      const { contract } = await getContract();
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+    
+
+      const supplierList = [];
+
+      // Simulate checking 100 recent addresses (this is temporary until we have event indexing or backend)
+      for (let i = 0; i < 100; i++) {
+        try {
+          const randomAddress = `0x${i.toString(16).padStart(40, '0')}`;
+          const data = await contract.getSupplier(randomAddress);
+          supplierList.push({ address: randomAddress, ...data });
+        } catch (err) {
+          // skip invalid / non-existent suppliers
+        }
+      }
+
+      setSuppliers(supplierList);
     } catch (err) {
-      toast.error("You are not a registered supplier.");
-      setSupplier(null);
+      console.error("Error fetching suppliers:", err);
+      toast.error("Failed to load suppliers");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleUpdateProof = async () => {
+  const handleApprove = async (address) => {
     try {
-      const { contract } = getContract();
-      const tx = await contract.updateProof(newHash);
+      const { contract } = await getContract();
+      const tx = await contract.approveProof(address);
       await tx.wait();
-      toast.success("Proof updated successfully!");
-      fetchSupplierData(); // Refresh info
-      setNewHash("");
+      toast.success("Proof approved!");
+      fetchSuppliers();
     } catch (err) {
-      toast.error("Failed to update proof.");
-      console.error(err);
+      toast.error("Approval failed");
+    }
+  };
+
+  const handleRevoke = async (address) => {
+    try {
+      const { contract } = await getContract();
+      const tx = await contract.revokeProof(address);
+      await tx.wait();
+      toast.success("Proof revoked!");
+      fetchSuppliers();
+    } catch (err) {
+      toast.error("Revoking failed");
     }
   };
 
   useEffect(() => {
-    fetchSupplierData();
+    fetchSuppliers();
   }, []);
 
-  if (loading) return <p className="text-center">Loading...</p>;
-
-  if (!supplier)
-    return (
-      <p className="text-center text-red-500">
-        You are not a registered supplier. Please register first.
-      </p>
-    );
-
   return (
-    <div className="max-w-2xl mx-auto bg-white p-6 shadow rounded">
-      <h2 className="text-2xl font-semibold mb-4">Supplier Dashboard</h2>
-      <div className="mb-4">
-        <p><strong>Name:</strong> {supplier.name}</p>
-        <p><strong>ID Number:</strong> {supplier.idNumber}</p>
-        <p><strong>Proof Hash:</strong> {supplier.proofHash}</p>
-        <p><strong>Approved:</strong> {supplier.isApproved ? "✅ Yes" : "❌ No"}</p>
-        <p><strong>Certifier:</strong> {supplier.certifier}</p>
-      </div>
-      <div className="border-t pt-4 mt-4">
-        <h3 className="font-semibold mb-2">Update Proof Hash</h3>
-        <input
-          type="text"
-          placeholder="New proof hash"
-          value={newHash}
-          onChange={(e) => setNewHash(e.target.value)}
-          className="border p-2 w-full mb-2 rounded"
-        />
-        <button
-          onClick={handleUpdateProof}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Update Proof
-        </button>
-      </div>
+    <div className="max-w-4xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">Certifier Dashboard</h2>
+      {loading ? (
+        <p>Loading suppliers...</p>
+      ) : suppliers.length === 0 ? (
+        <p>No suppliers found.</p>
+      ) : (
+        <div className="space-y-4">
+          {suppliers.map((supplier, index) => (
+            <div key={index} className="border p-4 rounded shadow-sm">
+              <p><strong>Address:</strong> {supplier.address}</p>
+              <p><strong>Name:</strong> {supplier.name}</p>
+              <p><strong>ID Number:</strong> {supplier.idNumber}</p>
+              <p><strong>Proof Hash:</strong> {supplier.proofHash}</p>
+              <p><strong>Approved:</strong> {supplier.isApproved ? "✅ Yes" : "❌ No"}</p>
+              <p><strong>Certifier:</strong> {supplier.certifier}</p>
+
+              <div className="mt-2 space-x-2">
+                <button
+                  onClick={() => handleApprove(supplier.address)}
+                  className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => handleRevoke(supplier.address)}
+                  className="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700"
+                >
+                  Revoke
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-export default SupplierDashboard;
+export default CertifierDashboard;
